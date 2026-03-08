@@ -1,25 +1,28 @@
-local Net = {}
+local GenesisV50_Net = { Active = true }
 
-function Net:SecureCall(remote, ...)
-    -- Giả lập BlueX: Kiểm tra xem Remote có an toàn không trước khi gửi
-    if remote:IsA("RemoteEvent") then
-        remote:FireServer(...)
-    elseif remote:IsA("RemoteFunction") then
-        return remote:InvokeServer(...)
-    end
-end
-
-function Net:AntiKick()
-    -- Chặn lệnh Kick từ Server (Bypass cơ bản)
+function GenesisV50_Net:Bypass()
+    -- Bỏ qua hệ thống kiểm tra Key bằng cách giả lập trạng thái đã xác thực
+    _G.KeyEntered = true 
+    _G.KeySystem = false
+    
     local mt = getrawmetatable(game)
     setreadonly(mt, false)
-    local old = mt.__namecall
+    local oldNamecall = mt.__namecall
+    
     mt.__namecall = newcclosure(function(self, ...)
         local method = getnamecallmethod()
-        if method == "Kick" then return nil end
-        return old(self, ...)
+        -- Chặn lệnh Kick và các báo cáo rình mò (Teleport check)
+        if method == "Kick" or method == "ReportAbuse" then 
+            return nil 
+        end
+        return oldNamecall(self, ...)
     end)
+    setreadonly(mt, true)
+    print("🔓 [GenesisV50] Đã bỏ qua GetKey & Kích hoạt Anti-Kick.")
 end
 
-function Net:Init() _G.Genesis:Register("Network", self) self:AntiKick() end
-return Net
+function GenesisV50_Net:Init()
+    self:Bypass()
+    _G.Genesis:Register("GenesisV50_Network", self)
+end
+return GenesisV50_Net
