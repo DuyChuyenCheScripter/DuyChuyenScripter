@@ -2,7 +2,7 @@
 _G.Genesis = {
     Modules = {},
     -- Đảm bảo BaseUrl có dấu gạch chéo ở cuối
-    BaseUrl = "https://raw.githubusercontent.com/dalkj11111-ops/GenesisDuyScriptHub/main/",
+    BaseUrl = "https://raw.githubusercontent.com/DuyChuyenScripter/GenesisDuyScriptHub/main/",
     BootPriority = {
         -- Duy chỉ giữ lại những file ĐÃ CÓ trên GitHub của Duy thôi nhé:
         "core/event_bus.lua", 
