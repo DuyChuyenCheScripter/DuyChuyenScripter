@@ -10,7 +10,14 @@ _G.Genesis = {
         "systems/auto_farm.lua", 
         "systems/sea_events.lua",
         "ui/window.lua",
-        "visuals/optimizer.lua"
+        "visuals/optimizer.lua"   
+        "network/manager.lua", -- Bảo mật trước
+        "systems/combat.lua",
+        "visuals/optimizer.lua",
+        "ui/window.lua",
+        "core/engine.lua"      -- Engine luôn nạp cuối cùng để điều khiển các module trên
+    
+        
     }
 }
 
